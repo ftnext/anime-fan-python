@@ -1,5 +1,6 @@
 import re
 from datetime import date
+from operator import itemgetter
 from pathlib import Path
 from typing import Optional
 from urllib.request import urlopen
@@ -74,7 +75,8 @@ if __name__ == "__main__":
         else:
             unknown_date_schedules.append((i, schedule))
 
-    whole_schedules = sorted(known_date_schedules, key=lambda t: t[1])
+    get_date = itemgetter(1)
+    whole_schedules = sorted(known_date_schedules, key=get_date)
     whole_schedules.extend(unknown_date_schedules)
     for i, start_date in whole_schedules:
         print(titles[i].get_text())
