@@ -1,5 +1,5 @@
 import re
-from datetime import date
+from datetime import date, datetime
 from operator import itemgetter
 from pathlib import Path
 from typing import Optional
@@ -18,11 +18,10 @@ def extract_latest_date(schedule: str) -> Optional[date]:
     >>> extract_latest_date(s)
     datetime.date(2021, 4, 11)
     """
-    # TODO: dateutil を使うともっと簡単かも
     dates = []
-    matches = re.finditer(r"(\d{4})年(\d{1,2})月(\d{1,2})日", schedule)
+    matches = re.finditer(r"\d{4}年\d{1,2}月\d{1,2}日", schedule)
     for m in matches:
-        schedule_date = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
+        schedule_date = datetime.strptime(m.group(0), "%Y年%m月%d日").date()
         dates.append(schedule_date)
     if not dates:
         return None
