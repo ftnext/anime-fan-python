@@ -6,8 +6,8 @@ urls = ("/", "index")
 
 class index:
     def GET(self):
-        name = "Bob"
-        return render.index(name)
+        i = web.input(name=None)
+        return render.index(i.name)
 
 
 if __name__ == "__main__":
