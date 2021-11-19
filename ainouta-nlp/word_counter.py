@@ -17,7 +17,11 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("input_txt_path")
     parser.add_argument("--lower_limit", "-l", type=int, default=1)
+    parser.add_argument("--display_pos", "-p", action="store_true")
     args = parser.parse_args()
+
+    if args.display_pos:
+        args.lower_limit = 0
 
     nlp = Japanese()
 
@@ -29,7 +33,9 @@ if __name__ == "__main__":
                 tokens = nlp(sentence)
                 words.extend(
                     [
-                        token.lemma_
+                        (token.lemma_, token.pos_)
+                        if args.display_pos
+                        else token.lemma_
                         for token in tokens
                         if token.pos_ not in EXCLUDED_POS_SET
                         and not token.is_stop
