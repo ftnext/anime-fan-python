@@ -10,6 +10,7 @@ EXCLUDED_POS_SET = set(
         "AUX",  # auxiliary 助動詞（てる、だ、たい）
         "PART",  # particle 接辞（か、な、よ）
         "SCONJ",  # subordinating conjunction 従属接続詞（て）
+        "X",  # other（全角スペースなど）
     )
 )
 
