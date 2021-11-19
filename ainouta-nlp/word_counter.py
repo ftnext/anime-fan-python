@@ -32,6 +32,7 @@ if __name__ == "__main__":
                         token.lemma_
                         for token in tokens
                         if token.pos_ not in EXCLUDED_POS_SET
+                        and not token.is_stop
                     ]
                 )
 
