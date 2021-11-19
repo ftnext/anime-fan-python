@@ -22,14 +22,11 @@
       }
 
       function onPlayerReady(event) {
-        console.log("onPlayerReady");
-        console.log(event);
         event.target.seekTo(18).playVideo();
       }
 
       var done = false;
       function onPlayerStateChange(event) {
-        console.log("onPlayerStateChange");
         if (event.data == YT.PlayerState.PLAYING && !done) {
           setTimeout(stopVideo, 15000);
           done = true;
