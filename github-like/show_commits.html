@@ -18,17 +18,13 @@
 
     <script type="text/javascript">
       const cal = new CalHeatMap();
-      const data = {
-        "1635519600.0": 1,
-        "1635865200.0": 1,
-      };
       const config = {
         domain: "month",
         subDomain: "day",
         range: 4,
         tooltip: true,
         start: new Date(2021, 9), // start October, 1st 2021
-        data: data,
+        data: "commits_ainouta.json",
         legend: [0.0, 0.5, 1.0, 1.5],
         cellSize: 15,
         subDomainTextFormat: "%d",
