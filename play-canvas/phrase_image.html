@@ -19,17 +19,20 @@
     canvas.width = 1280;
     canvas.height = 720;
 
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    function drawTextOnCanvas(sentence) {
+      ctx.fillStyle = "yellow";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    ctx.fillStyle = "aqua";
-    const sentence = "#みんなでアイうた";
-    const length = Math.max(sentence.length, 5);
-    const fontSize = (canvas.width - 60) / ((length ?? 7) + 0.5);
-    ctx.font = `bold ${fontSize}px 'Noto Sans JP'`;
-    const textWidth = ctx.measureText(sentence).width;
-    const width = (canvas.width - textWidth) / 2;
-    const height = (canvas.height + fontSize) / 2;
-    ctx.fillText(sentence, width, height);
+      ctx.fillStyle = "aqua";
+      const length = Math.max(sentence.length, 5);
+      const fontSize = (canvas.width - 60) / ((length ?? 7) + 0.5);
+      ctx.font = `bold ${fontSize}px 'Noto Sans JP'`;
+      const textWidth = ctx.measureText(sentence).width;
+      const width = (canvas.width - textWidth) / 2;
+      const height = (canvas.height + fontSize) / 2;
+      ctx.fillText(sentence, width, height);
+    }
+
+    drawTextOnCanvas("#みんなでアイうた");
   </script>
 </body>
