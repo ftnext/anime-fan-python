@@ -10,9 +10,19 @@
 </head>
 
 <body>
+  <input id="sentenceInput" />
+  <button id="drawCanvas">Draw</button>
   <canvas id="canvas"></canvas>
 
   <script>
+    const sentenceInput = document.getElementById("sentenceInput");
+    const drawButton = document.getElementById("drawCanvas");
+
+    drawButton.onclick = () => {
+      const sentence = sentenceInput.value;
+      drawTextOnCanvas(sentence);
+    };
+
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -32,7 +42,5 @@
       const height = (canvas.height + fontSize) / 2;
       ctx.fillText(sentence, width, height);
     }
-
-    drawTextOnCanvas("#みんなでアイうた");
   </script>
 </body>
