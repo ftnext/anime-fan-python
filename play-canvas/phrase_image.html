@@ -29,17 +29,34 @@
     canvas.width = 1280;
     canvas.height = 720;
 
-    function drawTextOnCanvas(sentence) {
+    function clearCanvas() {
       ctx.fillStyle = "yellow";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function calculateFontSize(sentenceLength) {
+      return (canvas.width - 60) / (sentenceLength + 0.5);
+    }
+
+    function generateFontCss(fontSize) {
+      return `bold ${fontSize}px 'Noto Sans JP'`;
+    }
+
+    function calculateCenteringStart(sentence, fontSize, lineCount) {
+      const textWidth = ctx.measureText(sentence).width;
+      const xStart = (canvas.width - textWidth) / 2;
+      const yStart = (canvas.height / lineCount + fontSize) / 2;
+      return { x: xStart, y: yStart };
+    }
+
+    function drawTextOnCanvas(sentence) {
+      clearCanvas();
 
       ctx.fillStyle = "aqua";
-      const fontSize = (canvas.width - 60) / (sentence.length + 0.5);
-      ctx.font = `bold ${fontSize}px 'Noto Sans JP'`;
-      const textWidth = ctx.measureText(sentence).width;
-      const width = (canvas.width - textWidth) / 2;
-      const height = (canvas.height + fontSize) / 2;
-      ctx.fillText(sentence, width, height);
+      const fontSize = calculateFontSize(sentence.length);
+      ctx.font = generateFontCss(fontSize);
+      point = calculateCenteringStart(sentence, fontSize, 1);
+      ctx.fillText(sentence, point.x, point.y);
     }
   </script>
 </body>
