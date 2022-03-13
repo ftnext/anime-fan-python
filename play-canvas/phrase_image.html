@@ -34,8 +34,7 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = "aqua";
-      const length = Math.max(sentence.length, 5);
-      const fontSize = (canvas.width - 60) / ((length ?? 7) + 0.5);
+      const fontSize = (canvas.width - 60) / (sentence.length + 0.5);
       ctx.font = `bold ${fontSize}px 'Noto Sans JP'`;
       const textWidth = ctx.measureText(sentence).width;
       const width = (canvas.width - textWidth) / 2;
