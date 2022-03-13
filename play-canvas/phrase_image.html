@@ -10,17 +10,23 @@
 </head>
 
 <body>
-  <input id="sentenceInput" />
+  <input id="sentenceInput1" />
+  <input id="sentenceInput2" />
   <button id="drawCanvas">Draw</button>
   <canvas id="canvas"></canvas>
 
   <script>
-    const sentenceInput = document.getElementById("sentenceInput");
+    const sentenceInput1 = document.getElementById("sentenceInput1");
+    const sentenceInput2 = document.getElementById("sentenceInput2");
     const drawButton = document.getElementById("drawCanvas");
 
     drawButton.onclick = () => {
-      const sentence = sentenceInput.value;
-      drawTextOnCanvas(sentence);
+      const sentence1 = sentenceInput1.value;
+      const sentence2 = sentenceInput2.value;
+      const sentences = [sentence1, sentence2];
+
+      clearCanvas();
+      drawTextOnCanvas(sentences);
     };
 
     const canvas = document.getElementById("canvas");
@@ -42,21 +48,33 @@
       return `bold ${fontSize}px 'Noto Sans JP'`;
     }
 
-    function calculateCenteringStart(sentence, fontSize, lineCount) {
+    function calculateCenteringStart(
+      sentence,
+      fontSize,
+      linesCount,
+      lineIndex
+    ) {
       const textWidth = ctx.measureText(sentence).width;
       const xStart = (canvas.width - textWidth) / 2;
-      const yStart = (canvas.height / lineCount + fontSize) / 2;
+
+      const lineHeight = canvas.height / linesCount;
+      const yCenterInOneLine = (lineHeight + fontSize) / 2;
+      const yStart = lineHeight * (lineIndex - 1) + yCenterInOneLine;
+
       return { x: xStart, y: yStart };
     }
 
-    function drawTextOnCanvas(sentence) {
-      clearCanvas();
-
+    function drawTextOnCanvas(sentences) {
+      const notEmptySentences = sentences.filter((s) => s !== "");
+      const linesCount = notEmptySentences.length;
       ctx.fillStyle = "aqua";
-      const fontSize = calculateFontSize(sentence.length);
-      ctx.font = generateFontCss(fontSize);
-      point = calculateCenteringStart(sentence, fontSize, 1);
-      ctx.fillText(sentence, point.x, point.y);
+      for (let i = 0; i < linesCount; i++) {
+        let sentence = notEmptySentences[i];
+        const fontSize = calculateFontSize(sentence.length);
+        ctx.font = generateFontCss(fontSize);
+        point = calculateCenteringStart(sentence, fontSize, linesCount, i + 1);
+        ctx.fillText(sentence, point.x, point.y);
+      }
     }
   </script>
 </body>
