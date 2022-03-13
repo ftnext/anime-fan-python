@@ -48,19 +48,25 @@
       return `bold ${fontSize}px 'Noto Sans JP'`;
     }
 
+    function calculateXCenterStart(sentence) {
+      const textWidth = ctx.measureText(sentence).width;
+      return (canvas.width - textWidth) / 2;
+    }
+
+    function calculateYCenterStart(fontSize, linesCount, lineIndex) {
+      const lineHeight = canvas.height / linesCount;
+      const yCenterInOneLine = (lineHeight + fontSize) / 2;
+      return lineHeight * (lineIndex - 1) + yCenterInOneLine;
+    }
+
     function calculateCenteringStart(
       sentence,
       fontSize,
       linesCount,
       lineIndex
     ) {
-      const textWidth = ctx.measureText(sentence).width;
-      const xStart = (canvas.width - textWidth) / 2;
-
-      const lineHeight = canvas.height / linesCount;
-      const yCenterInOneLine = (lineHeight + fontSize) / 2;
-      const yStart = lineHeight * (lineIndex - 1) + yCenterInOneLine;
-
+      const xStart = calculateXCenterStart(sentence);
+      const yStart = calculateYCenterStart(fontSize, linesCount, lineIndex);
       return { x: xStart, y: yStart };
     }
 
