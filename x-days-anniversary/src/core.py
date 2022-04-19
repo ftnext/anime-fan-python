@@ -17,4 +17,6 @@ class DayCountDown:
 
     def __call__(self, point: date) -> int:
         delta = self._goal - point
+        if self._include:
+            return delta.days + 1
         return delta.days
