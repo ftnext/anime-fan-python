@@ -16,7 +16,7 @@ jobs:
       matrix:
         python-version:
           - '3.9'
-          - '3,10'
+          - '3.10'
 
     steps:
       - name: Checkout code
