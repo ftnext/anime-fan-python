@@ -1,7 +1,7 @@
 from datetime import date
 from unittest import TestCase
 
-from src.core import DayCountDown, XthDayCount
+from sparkling_counter.core import DayCountDown, XthDayCount
 
 
 class XthDayCountTestCase(TestCase):
