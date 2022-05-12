@@ -46,10 +46,12 @@ class DayCountDownTestCase(TestCase):
     def test_when_goal_is_included(self):
         sut = DayCountDown(date(2022, 6, 10), include=True)
 
-        actual = sut(date(2022, 6, 8))
-
         # 2022/6/10を含んで2022/6/8から何日あるか -> 6/8, 6/9, 6/10の3日
-        self.assertEqual(actual, 3)
+        for date_, expected in (date(2022, 6, 8), 3), (date(2022, 6, 10), 1):
+            with self.subTest(date_=date_):
+                actual = sut(date_)
+
+                self.assertEqual(actual, expected)
 
     def test_raise_error_when_goal_is_included(self):
         sut = DayCountDown(date(2022, 5, 12), include=True)
