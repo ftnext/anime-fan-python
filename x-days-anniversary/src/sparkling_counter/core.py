@@ -1,6 +1,10 @@
 from datetime import date
 
 
+class IllegalDayCountError(Exception):
+    ...
+
+
 class XthDayCount:
     def __init__(self, anniversary: date) -> None:
         self._anniversary = anniversary
