@@ -1,6 +1,10 @@
 from datetime import date
 
 
+class IllegalDayCountError(Exception):
+    ...
+
+
 class XthDayCount:
     def __init__(self, anniversary: date) -> None:
         self._anniversary = anniversary
@@ -17,6 +21,11 @@ class DayCountDown:
 
     def __call__(self, point: date) -> int:
         delta = self._goal - point
+        day_count = delta.days
         if self._include:
-            return delta.days + 1
-        return delta.days
+            day_count += 1
+
+        if day_count <= 0:
+            raise IllegalDayCountError
+
+        return day_count
