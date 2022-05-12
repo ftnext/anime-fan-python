@@ -20,8 +20,13 @@ class DayCountDown:
         self._include = include
 
     def __call__(self, point: date) -> int:
-        if self._goal < point:
-            raise IllegalDayCountError
+        if self._include:
+            if self._goal < point:
+                raise IllegalDayCountError
+        else:
+            if self._goal <= point:
+                raise IllegalDayCountError
+
         delta = self._goal - point
         if self._include:
             return delta.days + 1
