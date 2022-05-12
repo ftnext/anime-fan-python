@@ -35,6 +35,14 @@ class DayCountDownTestCase(TestCase):
         # 2022/1/8を含まずに2022/1/6から何日あるか -> 1/6, 1/7の2日
         self.assertEqual(actual, 2)
 
+    def test_raise_error_when_goal_is_not_included(self):
+        sut = DayCountDown(date(2022, 5, 12), include=False)
+
+        for date_ in (date(2022, 5, 12), date(2022, 5, 13), date(2022, 6, 1)):
+            with self.subTest(date_=date_):
+                with self.assertRaises(IllegalDayCountError):
+                    sut(date_)
+
     def test_when_goal_is_included(self):
         sut = DayCountDown(date(2022, 6, 10), include=True)
 
