@@ -29,6 +29,8 @@ class DayCountDown:
         if self._include:
             day_count += 1
 
+        if not self._include and day_count == 0:
+            raise ArrivingTheDayException
         if day_count <= 0:
             raise IllegalDayCountError
 
