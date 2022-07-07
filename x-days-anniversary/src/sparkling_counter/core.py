@@ -5,6 +5,10 @@ class IllegalDayCountError(Exception):
     ...
 
 
+class ArrivingTheDayException(Exception):
+    ...
+
+
 class XthDayCount:
     def __init__(self, anniversary: date) -> None:
         self._anniversary = anniversary
@@ -25,6 +29,8 @@ class DayCountDown:
         if self._include:
             day_count += 1
 
+        if not self._include and day_count == 0:
+            raise ArrivingTheDayException
         if day_count <= 0:
             raise IllegalDayCountError
 

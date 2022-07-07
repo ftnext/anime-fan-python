@@ -2,6 +2,7 @@ from datetime import date
 from unittest import TestCase
 
 from sparkling_counter.core import (
+    ArrivingTheDayException,
     DayCountDown,
     IllegalDayCountError,
     XthDayCount,
@@ -38,10 +39,16 @@ class DayCountDownTestCase(TestCase):
     def test_raise_error_when_goal_is_not_included(self):
         sut = DayCountDown(date(2022, 5, 12), include=False)
 
-        for date_ in (date(2022, 5, 12), date(2022, 5, 13), date(2022, 6, 1)):
+        for date_ in (date(2022, 5, 13), date(2022, 6, 1)):
             with self.subTest(date_=date_):
                 with self.assertRaises(IllegalDayCountError):
                     sut(date_)
+
+    def test_the_day_exception(self):
+        sut = DayCountDown(date(2022, 5, 12), include=False)
+
+        with self.assertRaises(ArrivingTheDayException):
+            sut(date(2022, 5, 12))
 
     def test_when_goal_is_included(self):
         sut = DayCountDown(date(2022, 6, 10), include=True)
