@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import logging
+import random
 import time
 from pathlib import Path
 from urllib.parse import urlparse
@@ -37,7 +38,7 @@ async def download_async(client, src_url, dest_path):
     response = await client.get(src_url)
     logging.info("Downloaded %s", src_url)
     save_image(dest_path, response.content)
-    await asyncio.sleep(1)
+    await asyncio.sleep(random.random())
 
 
 def save_image(dest_path, content):
@@ -84,4 +85,4 @@ if __name__ == "__main__":
                 dest_path = args.output_root / build_image_path(src_url)
                 download_image(src_url, dest_path)
                 logging.info("Downloaded %s", src_url)
-                time.sleep(1)  # randomにして負荷をより減らせる
+                time.sleep(random.random())
