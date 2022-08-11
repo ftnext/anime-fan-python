@@ -15,8 +15,7 @@ logging.basicConfig(level=logging.INFO)
 
 def tweet_iterator(tweets_jsonl_path):
     with jsonlines.open(tweets_jsonl_path) as reader:
-        for tweet in reader:
-            yield tweet
+        yield from reader
 
 
 def build_image_path(url):
