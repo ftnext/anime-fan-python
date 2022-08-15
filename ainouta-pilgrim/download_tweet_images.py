@@ -7,6 +7,7 @@ from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
+import aiofiles
 import httpx
 import jsonlines
 
@@ -36,13 +37,13 @@ def download_image(src_url, dest_path):
 async def download_async(client, src_url, dest_path):
     response = await client.get(src_url)
     logging.info("Downloaded %s", src_url)
-    save_image(dest_path, response.content)
+    await save_image_async(dest_path, response.content)
     await asyncio.sleep(random.random())
 
 
-def save_image(dest_path, content):
-    with open(dest_path, "wb") as fb:
-        fb.write(content)
+async def save_image_async(dest_path, content):
+    async with aiofiles.open(dest_path, "wb") as fb:
+        await fb.write(content)
 
 
 async def download_images_async(tweets, output_root):
