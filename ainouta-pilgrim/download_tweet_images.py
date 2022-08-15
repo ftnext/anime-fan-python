@@ -61,7 +61,9 @@ async def download_images_async(tweets, output_root):
                     download_coroutines.append(
                         download_async(client, src_url, dest_path)
                     )
-            _ = await asyncio.gather(*download_coroutines)
+            _ = await asyncio.gather(
+                *download_coroutines, return_exceptions=True
+            )
 
 
 if __name__ == "__main__":
