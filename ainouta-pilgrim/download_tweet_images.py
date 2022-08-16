@@ -36,10 +36,10 @@ def download_image(src_url, dest_path):
 
 
 async def download_async(client, src_url, dest_path):
+    await asyncio.sleep(random.random())
     response = await client.get(src_url)
     logging.info("Downloaded %s", src_url)
     await save_image_async(dest_path, response.content)
-    await asyncio.sleep(random.random())
 
 
 async def save_image_async(dest_path, content):
