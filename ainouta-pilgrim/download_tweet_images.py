@@ -7,8 +7,10 @@ from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import urlopen
 
+import aiofiles
 import httpx
 import jsonlines
+from more_itertools import chunked
 
 logging.basicConfig(level=logging.INFO)
 
@@ -34,30 +36,34 @@ def download_image(src_url, dest_path):
 
 
 async def download_async(client, src_url, dest_path):
+    await asyncio.sleep(random.random())
     response = await client.get(src_url)
     logging.info("Downloaded %s", src_url)
-    save_image(dest_path, response.content)
-    await asyncio.sleep(random.random())
+    await save_image_async(dest_path, response.content)
 
 
-def save_image(dest_path, content):
-    with open(dest_path, "wb") as fb:
-        fb.write(content)
+async def save_image_async(dest_path, content):
+    async with aiofiles.open(dest_path, "wb") as fb:
+        await fb.write(content)
 
 
 async def download_images_async(tweets, output_root):
+    chunk_size = 10
     async with httpx.AsyncClient() as client:
-        download_coroutines = []
-        for tweet in tweets:
-            if "attachments" not in tweet:
-                continue
-            for attachment in tweet["attachments"]:
-                src_url = attachment["url"]
-                dest_path = output_root / build_image_path(src_url)
-                download_coroutines.append(
-                    download_async(client, src_url, dest_path)
-                )
-        _ = await asyncio.gather(*download_coroutines)
+        for tweet_chunk in chunked(tweets, chunk_size):
+            download_coroutines = []
+            for tweet in tweet_chunk:
+                if "attachments" not in tweet:
+                    continue
+                for attachment in tweet["attachments"]:
+                    src_url = attachment["url"]
+                    dest_path = output_root / build_image_path(src_url)
+                    download_coroutines.append(
+                        download_async(client, src_url, dest_path)
+                    )
+            _ = await asyncio.gather(
+                *download_coroutines, return_exceptions=True
+            )
 
 
 if __name__ == "__main__":
