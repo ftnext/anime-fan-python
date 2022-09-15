@@ -12,3 +12,4 @@ reports
 
 # Refine root .gitignore
 !*.spec
+!env/
