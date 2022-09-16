@@ -7,10 +7,14 @@ from getgauge.python import data_store, step
 BASE_URL = os.getenv("API_ENDPOINT")
 
 
+def call_api(path):
+    with urlopen(urljoin(BASE_URL, path)) as res:
+        return json.load(res)
+
+
 @step("さかなー🐟")
 def do_fish():
-    with urlopen(urljoin(BASE_URL, "sakana")) as res:
-        response = json.load(res)
+    response = call_api("sakana")
     data_store.suite["sakana"] = response
 
 
@@ -19,9 +23,12 @@ def assert_chisato():
     assert data_store.suite.sakana == "ちんあなごー🙌"
 
 
-@step("ちんあなごー すると さかなー を返す")
-def assert_takina():
-    with urlopen(urljoin(BASE_URL, "chinanago")) as res:
-        response = json.load(res)
+@step("ちんあなごー🙌")
+def do_chinanago():
+    response = call_api("chinanago")
+    data_store.suite.chinanago = response
 
-    assert response == "さかなー🐟"
+
+@step("さかなー🐟 が返ること")
+def assert_takina():
+    assert data_store.suite["chinanago"] == "さかなー🐟"
