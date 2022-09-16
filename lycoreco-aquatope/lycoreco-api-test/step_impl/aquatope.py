@@ -2,17 +2,21 @@ import json
 import os
 from urllib.request import urljoin, urlopen
 
-from getgauge.python import step
+from getgauge.python import data_store, step
 
 BASE_URL = os.getenv("API_ENDPOINT")
 
 
-@step("さかなー すると ちんあなごー を返す")
-def assert_chisato():
+@step("さかなー🐟")
+def do_fish():
     with urlopen(urljoin(BASE_URL, "sakana")) as res:
         response = json.load(res)
+    data_store.suite["sakana"] = response
 
-    assert response == "ちんあなごー🙌"
+
+@step("ちんあなごー🙌 が返ること")
+def assert_chisato():
+    assert data_store.suite.sakana == "ちんあなごー🙌"
 
 
 @step("ちんあなごー すると さかなー を返す")
