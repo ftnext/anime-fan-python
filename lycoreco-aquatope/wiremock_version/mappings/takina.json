@@ -1,0 +1,10 @@
+{
+    "request": {
+        "urlPath": "/chinanago",
+        "method": "GET"
+    },
+    "response": {
+        "status": 200,
+        "body": "さかなー🐟"
+    }
+}
