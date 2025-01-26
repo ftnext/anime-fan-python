@@ -31,3 +31,14 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: mappings
+          mountPath: /home/wiremock/mappings
+          readOnly: true
+      volumes:
+      - name: mappings
+        configMap:
+          name: chisa-taki-config
+          items:
+          - key: "takina.mappings"
+            path: "takina.json"

@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chisa-taki-config
+data:
+  takina.mappings: |
+    {
+        "request": {
+            "urlPath": "/chinanago",
+            "method": "GET"
+        },
+        "response": {
+            "status": 200,
+            "body": "さかなー🐟"
+        }
+    }
