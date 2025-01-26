@@ -4,4 +4,4 @@ metadata:
   name: lycoreco-aquatope
 manifests:
   rawYaml:
-    - k8s/api.yaml
+    - k8s/*.yaml
