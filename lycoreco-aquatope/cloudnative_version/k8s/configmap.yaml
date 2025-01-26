@@ -14,3 +14,31 @@ data:
             "body": "さかなー🐟"
         }
     }
+  chisato.mappings: |
+    {
+        "request": {
+            "urlPath": "/sakana",
+            "method": "POST",
+            "headers": {
+                "Content-Type": {
+                    "equalTo": "application/json"
+                }
+            },
+            "bodyPatterns": [
+                {
+                    "equalToJson": {
+                        "lines": "sakana"
+                    }
+                }
+            ]
+        },
+        "response": {
+            "status": 200,
+            "bodyFileName": "chisato.json"
+        }
+    }
+  chisato.files: |
+    {
+        "character": "千束",
+        "lines": "ちんあなごー🙌"
+    }

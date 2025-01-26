@@ -35,6 +35,9 @@ spec:
         - name: mappings
           mountPath: /home/wiremock/mappings
           readOnly: true
+        - name: files
+          mountPath: /home/wiremock/__files
+          readOnly: true
       volumes:
       - name: mappings
         configMap:
@@ -42,3 +45,11 @@ spec:
           items:
           - key: "takina.mappings"
             path: "takina.json"
+          - key: "chisato.mappings"
+            path: "chisato.json"
+      - name: files
+        configMap:
+          name: chisa-taki-config
+          items:
+          - key: "chisato.files"
+            path: "chisato.json"
