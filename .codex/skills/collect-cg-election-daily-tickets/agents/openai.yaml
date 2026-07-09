@@ -1,0 +1,4 @@
+interface:
+  display_name: "CG Daily Tickets"
+  short_description: "Collect Cinderella election daily tickets"
+  default_prompt: "Use $collect-cg-election-daily-tickets to collect today's Cinderella Girls election daily voting tickets."
